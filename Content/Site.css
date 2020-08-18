@@ -1,0 +1,151 @@
+﻿
+
+body {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.navbar-brand {
+    padding: 0 2rem 0 5rem;
+}
+
+
+.navbar {
+    padding: 1rem 17rem;
+}
+
+
+
+.nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    color: #141313;
+    
+}
+
+.active a {
+    background: #854fee;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-nav a:hover {
+    background: #854fee;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+
+.pro-cards {
+    padding-top: 2rem;
+}
+
+.flip-card {
+    padding: 1rem;
+    width: 300px;
+    height: 350px;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    border-radius: 8px;
+}
+
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+    box-shadow: 0px 10px 30px rgba(57, 56, 61, 0.205);
+    
+}
+
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 8px;
+}
+
+.flip-card-front {
+    padding-top: 2rem;
+    width: 9rem;
+}
+
+
+
+
+
+
+.flip-card-front {
+    /* background-color: whitesmoke; */
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    /* box-shadow: 0px 10px 30px rgba(57, 56, 61, 0.205);*/
+    border-radius: 4px;
+}
+
+.flip-card-back {
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    /*background-color: whitesmoke;*/
+    transform: rotateY(180deg);
+}
+
+.flip-card-inner {
+    border: 1px solid #201f1f17;
+    transition: transform .4s ease;
+}
+
+
+.primary-button {
+    background: #854fee;
+    background-clip: padding-box;
+    color: whitesmoke;
+    transition: background .6s ease;
+    box-shadow: var(--box-shadow);
+}
+
+    .primary-button:hover {
+        background: whitesmoke;
+        background-clip: padding-box;
+        color: black;
+    }
+
+    .image > img{
+        width: 80px;
+        height: 80px;
+    }
