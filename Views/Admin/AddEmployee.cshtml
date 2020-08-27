@@ -1,4 +1,4 @@
-﻿@model TCSProject.Models.Employee
+@model TCSProject.Models.Employee
 @{
     if (Session["AdmId"] == null)
     {
@@ -40,7 +40,7 @@
                     </div>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="@Url.Action("Login","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
+                    <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
                 </li>
             </ul>
         </div>
@@ -55,93 +55,122 @@
 
 
 @if (ViewBag.AddEmpStatus != null)
+
 {
+
+    
     if (ViewBag.AddEmpStatus == true)
     {
-        <div class="alert alert-success" role="alert">
-            @ViewBag.Message
+        <div class="container">
+            <div class="alert alert-success" role="alert">
+                @ViewBag.Message
+            </div>
         </div>
     }
     else
     {
-        <div class="alert alert-danger" role="alert">
-            @ViewBag.Message
+        <div class="container pt-2">
+            <div class="alert alert-danger pt-2" role="alert">
+                @ViewBag.Message
+            </div>
         </div>
     }
+
 }
 @using (Html.BeginForm())
 {
 
-    <div class="form-horizontal">
-        <h4>Employee</h4>
-        <hr />
+    <div class="form-horizontal text-center myClass">
+        <h4 class="text-success">Add Employee</h4>
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+    <table class="table table-bordered table-hover">
+        <tr style="background: #6fcf99;" >
+            <th>
+                &nbsp;&nbsp; Employee
+            </th>
+            <th>
+                Details to be filled
+            </th>
+        </tr>
+        <tr>
+
+            <td>
+
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First name", required = "required" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last name", required = "required" } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
+            </td>
+        </tr>
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", required = "required" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </td>
+        </tr>
 
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
                 @Html.EditorFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control", placeholder = "Project ID", required = "required" } })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </td>
+        </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.WONNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+
+
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.WONNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
                 @Html.EditorFor(model => model.WONNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "WON Number", required = "required" } })
                 @Html.ValidationMessageFor(model => model.WONNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </td>
+        </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectDetails, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.ProjectDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
                 @Html.EditorFor(model => model.ProjectDetails, new { htmlAttributes = new { @class = "form-control", placeholder = "Project Details", required = "required" } })
                 @Html.ValidationMessageFor(model => model.ProjectDetails, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </td>
+        </tr>
 
-        <div class="form-group">
-
-            <div class="col-md-10">
-
-                @Html.ValidationMessageFor(model => model.LoginErrorMessage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add Employee" class="btn btn-default" />
-            </div>
-        </div>
+        <tr>
+            <td colspan="2" class="text-center">
+                
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Add Employee" />
+            </td>
+        </tr>
+        
+    </table>
     </div>
 }
 
