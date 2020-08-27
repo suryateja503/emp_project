@@ -1,4 +1,4 @@
-﻿@model TCSProject.Models.Employee
+@model TCSProject.Models.Employee
 
 @{
 
@@ -51,7 +51,7 @@
                     </div>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="@Url.Action("Login","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
+                    <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
                 </li>
             </ul>
         </div>
@@ -69,29 +69,50 @@
     @using (Html.BeginForm())
     {
 
-<div class="container  pt-2">
-    <div class="form-group">
-        Employee ID:
-        <div>
-            @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", placeholder = "Emp Id", required = "required" } })
-            @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div>
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", required = "required" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
+<div class="container pt-2 myClass">
+    <div class="text-center text-danger">
+        <h4>Remove Employee</h4>
     </div>
 
 
+    <table class="table table-bordered table-hover">
+        <tr style="background: #dc3545;">
+            <th>Employee</th>
+            <th>
+                Details to be filled
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.EmpId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", placeholder = "Employee ID", required = "required" } })
+                @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center">
+
+                <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" value="Remove Employee" />
+            </td>
+        </tr>
+    </table>
+    
 
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn button primary-button" />
-    </div>
+
+
 
 </div>
     }
@@ -100,23 +121,27 @@
     {
         if (ViewBag.DeleteStatus == true)
         {
-            <div class="alert alert-success" role="alert">
-                @ViewBag.Message
+            <div class="container">
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.Message
+                </div>
             </div>
 
         }
         else
         {
+            <div class="container">
             <div class="alert alert-danger" role="alert">
                 @ViewBag.Message
             </div>
+                </div>
         }
     }
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    
     </body>
 </html>
 
