@@ -1,4 +1,4 @@
-﻿@model TCSProject.Models.Employee
+@model TCSProject.Models.Employee
 
 
 @{
@@ -8,9 +8,10 @@
     }
     Layout = null;
 
-    //ViewBag.IsEmployeePresent = false;
+    
 
 }
+    <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -18,15 +19,16 @@
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
     <style>
-        .center{
-            margin-left: auto;
-            margin-right: auto;
+        .myClass {
+            margin: auto;
+            width: 60%;
+            border-color :#bbbbbb ;
+            padding: 10px;
         }
-
     </style>
 </head>
 <body>
-    <div class="">
+    <div >
 
 
         <div class="main-menu">
@@ -58,7 +60,7 @@
                             </div>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="@Url.Action("Login","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
+                            <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -72,149 +74,261 @@
 
 
 
-    
-    <div class="container pt-2 custom">
 
 
-        @using (Html.BeginForm())
-        {
-            <div class="row pt-3">
 
-                <div class="col">
 
-                </div>
-                <div class="form-group text-center col">
+    @using (Html.BeginForm())
+    {
 
-                    <div class="form-inline my-2 my-lg-0">
-                        <strong>Employee ID: </strong>&nbsp @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control ", placeholder = "Search", type = "search" } })
-                        @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
-                    </div>
-                    <br />
-                    <div class="form-inline pl-4">
-                        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search" />
-                    </div>
-                </div>
 
-                <div class="col">
 
-                </div>
+        <div class="form-group myClass">
+            <div class="form-inline myClass">
+
+
+                <strong>Employee ID: </strong>&nbsp @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control ", placeholder = "Eg: 1872310", type = "search" } })
+
+                
+
+
+                &nbsp<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search" />
+
 
             </div>
-                <!--
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </div>
 
-                    </form>
-                -->
-            
 
-        }
 
-        @if (ViewBag.IsEmployeePresent != null)
+        <!--
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+            </form>
+        -->
+
+
+    }
+
+    @if (ViewBag.IsEmployeePresent != null)
+    {
+
+
+        if (ViewBag.IsEmployeePresent == true)
         {
+            <div class="container">
 
+                <!--
+                <div class="limiter">
+                    <div class="container-table100">
+                        <div class="wrap-table100">
+                            <div class="table">
 
-            if (ViewBag.IsEmployeePresent == true)
-            {
-                <div class="container" style=" align-content: center;">
+                                <div class="row header">
+                                    <div class="cell">
+                                        Employee
+                                    </div>
+                                    <div class="cell">
+                                        Details
+                                    </div>
+                                </div>
 
-                    <div class="text-center" id="view-area">
-                        <table class="center">
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.EmpId)
-                                </td>
+                                <div class="row">
+                                    <div class="cell" data-title="Employee ID">
+                                        Employee ID
+                                    </div>
+                                    <div class="cell" data-title="Employee ID">
+                                        @Html.DisplayFor(model => model.EmpId)
+                                    </div>
 
-                                <td>
-                                    @Html.DisplayFor(model => model.EmpId)
-                                </td>
-                            </tr>
+                                </div>
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.FirstName)
-                                </td>
+                                <div class="row">
+                                    <div class="cell" data-title="FirstName">
+                                        First Name
+                                    </div>
+                                    <div class="cell" data-title="First Name">
+                                        @Html.DisplayFor(model => model.FirstName)
+                                    </div>
 
-                                <td>
-                                    @Html.DisplayFor(model => model.FirstName)
-                                </td>
-                            </tr>
+                                </div>
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.LastName)
-                                </td>
+                                <div class="row">
+                                    <div class="cell" data-title="Last name">
+                                        Last Name
+                                    </div>
+                                    <div class="cell" data-title="Last Name">
+                                        @Html.DisplayFor(model => model.LastName)
+                                    </div>
 
-                                <td>
-                                    @Html.DisplayFor(model => model.LastName)
-                                </td>
-                            </tr>
+                                </div>
 
+                                <div class="row">
+                                    <div class="cell" data-title="Email ">
+                                        Email ID
+                                    </div>
+                                    <div class="cell" data-title="Email ">
+                                        @Html.DisplayFor(model => model.Email)
+                                    </div>
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.Email)
-                                </td>
+                                </div>
 
-                                <td>
-                                    @Html.DisplayFor(model => model.Email)
-                                </td>
-                            </tr>
+                                <div class="row">
+                                    <div class="cell" data-title="Project ID">
+                                        Project ID
+                                    </div>
+                                    <div class="cell" data-title="Project ID">
+                                        @Html.DisplayFor(model => model.ProjectId)
+                                    </div>
 
+                                </div>
+                                <div class="row">
+                                    <div class="cell" data-title="WON Number">
+                                        WON Number
+                                    </div>
+                                    <div class="cell" data-title="WON Number">
+                                        @Html.DisplayFor(model => model.WONNumber)
+                                    </div>
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.ProjectId)
-                                </td>
+                                </div>
 
-                                <td>
-                                    @Html.DisplayFor(model => model.ProjectId)
-                                </td>
-                            </tr>
+                                <div class="row">
+                                    <div class="cell" data-title="Project Details">
+                                        Project Details
+                                    </div>
+                                    <div class="cell" data-title="Employee ID">
+                                        @Html.DisplayFor(model => model.ProjectDetails)
+                                    </div>
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.WONNumber)
-                                </td>
+                                </div>
 
-                                <td>
-                                    @Html.DisplayFor(model => model.WONNumber)
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td>
-                                    @Html.DisplayNameFor(model => model.ProjectDetails)
-                                </td>
-
-                                <td>
-                                    @Html.DisplayFor(model => model.ProjectDetails)
-                                </td>
-                            </tr>
-                        
-
-                        </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-            }
-            else
-            {
+
+
+                -->
+
+
+
+
+
                 
+                
+                    <table class="table table-bordered table-hover">
+                        <tr style="background: #6fcf99;">
+                            <th>
+                                Employee
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayNameFor(model => model.EmpId)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpId)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong> @Html.DisplayNameFor(model => model.FirstName)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.FirstName)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong> @Html.DisplayNameFor(model => model.LastName)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.LastName)
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <strong> @Html.DisplayNameFor(model => model.Email)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Email)
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayNameFor(model => model.ProjectId)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.ProjectId)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayNameFor(model => model.WONNumber)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.WONNumber)
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayNameFor(model => model.ProjectDetails)</strong>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.ProjectDetails)
+                            </td>
+                        </tr>
+
+
+                    </table>
+                
+
+                
+            </div>
+
+        }
+        else
+        {
+            <div class="container">
                 <div class="alert alert-danger" role="alert">
                     @Html.ValidationMessageFor(model => model.EmpId, "No such employee found")
                 </div>
-            }
+            </div>
         }
+    }
 
 
-    </div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="~/Scripts/main.js"></script>
+
+    <footer class="pt-100">
+        
+    </footer>
 </body>
 </html>
