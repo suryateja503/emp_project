@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TCSProject.Models.Employee>
+@model IEnumerable<TCSProject.Models.Employee>
 @{ 
     Layout = null;
     
@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
+
     <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 
-<body>
+<body >
 
     <div class="">
 
@@ -51,7 +52,7 @@
                             </div>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="@Url.Action("Login","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
+                            <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -70,7 +71,7 @@
             @foreach (var item in Model)
             {
                 <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="flip-card">
+                    <div class="flip-card wrapper">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
 
