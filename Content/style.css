@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,7 +18,7 @@ body {
     flex-direction: column;
     -webkit-box-pack: center;
     justify-content: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 100%;
 }
 
@@ -271,15 +271,4 @@ body {
                 font-size: 12px;
             }
 
-.concept {
-    position: absolute;
-    bottom: 25px;
-    color: #AAB0C4;
-    font-size: .9em;
-    font-weight: 400;
-}
 
-    .concept a {
-        color: #ac1966;
-        text-decoration: none;
-    }
