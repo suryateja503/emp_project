@@ -50,6 +50,12 @@
                         <a class="dropdown-item" href="@Url.Action("UpdateEmployeeDetails","Admin")">Update details</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Report","Admin")">Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Upload","Admin")">Upload</a>
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
                 </li>
@@ -92,15 +98,7 @@
                 @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
             </td>
         </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </td>
-        </tr>
+        
         <tr>
             <td colspan="2" class="text-center">
 
