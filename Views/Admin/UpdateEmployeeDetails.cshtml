@@ -6,6 +6,7 @@
     if(Session["AdmId"]== null)
     {
         Response.Redirect("~/Employee/Login");
+
     }
     Layout = null;
 }
@@ -53,6 +54,12 @@
                             <a class="dropdown-item active" href="#">Update details <span class="sr-only">(current)</span></a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Report","Admin")">Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Upload","Admin")">Upload</a>
+                    </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
                     </li>
@@ -64,100 +71,187 @@
 
     </div>
 
-    <div class="text-center text-warning">
+
+
+    <div class=" container text-center text-warning ">
         <h4>Update Employee </h4>
     </div>
 
     @using (Html.BeginForm())
     {
-<div class="container">
-    <table class="table table-bordered table-hover">
-        <tr style="        background: #ffc107;">
-            <th>Employee</th>
-            <th>Details to be filled</th>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.EmpId, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", placeholder = "Employee ID" } })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control", placeholder = "Project ID" } })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.WONNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.WONNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "WON Number" } })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.ProjectDetails, htmlAttributes: new { @class = "control-label col-md-2" })
-            </td>
-            <td>
-                @Html.EditorFor(model => model.ProjectDetails, new { htmlAttributes = new { @class = "form-control", placeholder = "Project Details" } })
-            </td>
-        </tr>
+        <div class="container">
 
-        <tr>
-            <td colspan="2" class="text-center">
+        
+        <table class="table  table-bordered">
+            <tr style="background: #ffc107;">
+                <th>Employee</th>
+                <th>Details to be filled</th>
+                <th></th>
+            </tr>
+            
+            <tr>
+                <td>
+                    Employee ID
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td colspan="2"><input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Search" /></td>
+            </tr>
+            
+        </table>
+            </div>
+    }
 
-                <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Update Details" />
-            </td>
-        </tr>
-    </table>
+
+       
+
+    
+
+    <p class="text-danger">@ViewBag.Temp</p>
+
+
+
     @if (ViewBag.UpdateEmpStatus != null)
     {
         if (ViewBag.UpdateEmpStatus == true)
         {
-            <div class="alert alert-success" role="alert">
-                @ViewBag.Message
+            <div class="container">
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.Message
+                </div>
             </div>
         }
         else
         {
-            <div class="alert alert-danger" role="alert">
-                @ViewBag.Message
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Message
+                </div>
             </div>
         }
     }
-</div>
 
-     }
+    @if (ViewBag.IsEmployeePresent != null)
+    {
+        if (ViewBag.IsEmployeePresent == true)
+        {
+
+            using (Html.BeginForm("Later", "Admin", FormMethod.Post))
+            {
+
+                <div class="container">
+                    <table class="table table-bordered table-hover">
+                        <tr style="        background: #ffc107;">
+                            <th>Employee</th>
+                            <th>Details to be filled</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.EmpId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.EmpId)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.WONNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.WONNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.ProjectDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.ProjectDetails, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.AssetId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.AssetId, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.TokenId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.TokenId, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center">
+
+                                <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Update Details" />
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+            }
+
+
+
+        }
+        else
+        {
+
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    No such employee found.
+                </div>
+            </div>
+        }
+    }
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
