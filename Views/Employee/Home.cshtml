@@ -1,10 +1,7 @@
-﻿
+@model TCSProject.Models.Employee
+
 @{
     Layout = null;
-
-
-}
-@{ 
     if (Session["EmpId"] == null)
     {
         Response.Redirect("~/Employee/Login");
@@ -16,17 +13,160 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/FileSaver.js"></script>
+    <script>
+        function fnExcelReport(id, name) {
+            var tab_text = '<html xmlns: x="urn:schemas-microsoft-com:office:excel">';
+            tab_text = tab_text + '<head><xml><x: ExcelWorkBook><x: ExcelWorkSheets><x: ExcelWorkSheet>';
+            tab_text = tab_text + '<x: Name>Test Sheet</x: Name>';
+            tab_text = tab_text + '<x: WorkSheetOptions><x: Panes></x: Panes><x: WorkSheetOptions></x: ExcelWorkSheet>';
+            tab_text = tab_text + '<x: ExcelWorkSheets><x: ExcelWorkBook></xml></head><body>';
+            tab_text = tab_text + "<table border='1px' style='color:black;' ";
 
-    <title>Home</title>
+            var export_table = $('#' + id).clone();
+            exportTable.find('th').last().remove();
+            exportTable.find('input').each(function (index, elem) { $(elem).remove(); });
+            exportTable.find('a').each(function (index, elem) { $(elem).remove(); });
+
+            tab_text = tab_text + export_table.html();
+            tab_text = tab_text + '</table></body></html>';
+
+            var fileName = "Demo" + '.xls';
+            var blob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset-utf-8" })
+                window.saveAs(blob, fileName);
+        }
+    </script>
 </head>
 <body>
-    <div> 
-        <h1>Welcome @Session["EmpId"] !</h1>
-        <a href="@Url.Action("Login")" >Logout</a>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h4>Welcome @Session["EmpId"] !</h4>
+            </div>
+            <div class="col mr-auto">
+
+            </div>
+            <div class="col-lg-2">
+                <a href="@Url.Action("Logout","Employee")">Logout</a>
+            </div>
+            <div class="col-lg-2">
+                <a href="@Url.Action("EditDetails","Employee")">Edit</a>
+            </div>
+        </div>
+        <div class="pt-5">
+            <table id="TableData" class="table table-hover table-bordered">
+                <tr style="background: #6fcf99;"><th>Employee</th><th>Details</th></tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmpId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmpId)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.FirstName)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.LastName)
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Email)
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ProjectId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ProjectId)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.WONNumber)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.WONNumber)
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ProjectDetails)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ProjectDetails)
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
     </div>
+
+    <center>
+        <button id="PDF" class="btn btn-outline-success my-2 my-sm-0" onclick="downloadPdf()">Download PDF</button>
+        <button id="XLS" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("Export","Employee")'">Download Excel</button>
+    </center>
+
+    <script type="text/javascript">
+        function downloadPdf() {
+            html2canvas($("#TableData")[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width:500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download(@Session["EmpId"]+".pdf");
+                }
+            })
+        }
+    </script>
+
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js" integrity="sha512-gYUM+7JjtBqPPGOgwgOZ+NwjGl+11/EP124oB+ihjlBpLgP5LTh7R/Iwcdy//cgH+QzrjspBiJI5iUegTNww3w==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" integrity="sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA==" crossorigin="anonymous"></script>
+
+
 </body>
 </html>
