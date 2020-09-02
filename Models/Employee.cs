@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -34,6 +35,15 @@ namespace TCSProject.Models
         public int WONNumber { get; set; }
 
         public string ProjectDetails { get; set; }
+        public int AssetId { get; set; }
+
+        public int TokenId { get; set; }
+        public string Location { get; set; }
+
+        public int LanId { get; set; }
         public string LoginErrorMessage { get; set; }
+        public bool turn { get; set; }
+
+
     }
 }
