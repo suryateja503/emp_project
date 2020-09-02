@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = null;
+    if (Session["AdmId"] == null)
+    {
+        Response.Redirect("~/Employee/Login");
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Later</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <a href="@Url.Action("UpdateEmployeeDetails","Admin")">Go Back</a>
+    </div>
+    <div class="container">
+        @if (ViewBag.UpdateEmpStatus != null)
+        {
+            if (ViewBag.UpdateEmpStatus)
+            {
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.Message
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Message
+                </div>
+            }
+        }
+
+        
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,152 @@
+﻿@model IEnumerable<TCSProject.Models.Employee>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LocationWiseReport</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <p>Employes at @ViewBag.SelectedLocation . &nbsp; &nbsp; &nbsp; <a href="@Url.Action("Report", "Admin")">Go Back</a></p>
+        <table class="table table-hover table-bordered" id="TableData">
+            <tr style="background: #6fcf99;">
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WONNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectDetails)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AssetId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TokenId)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.LanId)
+                </th>
+
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WONNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectDetails)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssetId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TokenId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LanId)
+                    </td>
+
+
+                </tr>
+            }
+
+        </table>
+
+    </div>
+
+    <center>
+        <button id="PDF" class="btn btn-outline-success my-2 my-sm-0" onclick="downloadPdf()">Download PDF</button>
+        <button id="XLS" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("LWR","Admin")'">Download EXCEL</button>
+    </center>
+
+    <script type="text/javascript">
+        function downloadPdf() {
+            html2canvas($("#TableData")[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width:500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("LocnWiseRep_@ViewBag.SelectedLocation" + ".pdf");
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        function exportToExcel(tableID, filename = '') {
+            var downloadurl;
+            var dataFileType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+            filename = filename ? filename + '.xls' : 'export_excel_data.xls';
+            downloadurl = document.createElement("a");
+            document.body.appendChild(downloadurl);
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTMLData], {
+                    type: dataFileType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+                downloadurl.download = filename;
+                downloadurl.click();
+            }
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js" integrity="sha512-gYUM+7JjtBqPPGOgwgOZ+NwjGl+11/EP124oB+ihjlBpLgP5LTh7R/Iwcdy//cgH+QzrjspBiJI5iUegTNww3w==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" integrity="sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA==" crossorigin="anonymous"></script>
+</body>
+</html>

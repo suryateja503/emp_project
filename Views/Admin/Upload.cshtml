@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+    if(Session["AdmId"] == null)
+    {
+        Response.Redirect("~/Employee/Login");
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main-menu">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Welcome <strong>@Session["AdmId"] !</strong></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Home","Admin")">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Search</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action("AddEmployee","Admin")">Add Employee</a>
+                            <a class="dropdown-item" href="@Url.Action("DeleteEmployee","Admin")">Remove Employee</a>
+                            <a class="dropdown-item" href="@Url.Action("UpdateEmployeeDetails","Admin")">Update details</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Report","Admin")">Report</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@Url.Action("Upload","Admin")">Upload<span class="sr-only">(current)</span> </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+    </div>
+
+
+    <div class="container">
+        <div class="row pt-5">
+
+            <div class="col p-5" style="border-style:ridge; padding:10px;">
+                <p>Excel sheet Template.</p>
+                <a href="~/ExcelFiles/Sample.xlsx"> Template.xlsx </a>
+            </div>
+            <div class="col p-5" style="border-style:ridge; padding:10px;">
+                @using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+
+                    <span>Excel File</span>
+                    <br/>
+                    <input type="file" name="excelfile" />
+                    <br />
+                    <input type="submit" value="Upload" />
+
+                    <div class="text-danger">
+                        @Html.Raw(ViewBag.Error)
+                    </div>
+                }
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
