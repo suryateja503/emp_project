@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <div >
+    <div>
 
 
         <div class="main-menu">
@@ -49,6 +49,7 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Search <span class="sr-only">(current)</span></a>
                         </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Actions
@@ -58,6 +59,13 @@
                                 <a class="dropdown-item" href="@Url.Action("DeleteEmployee","Admin")">Remove Employee</a>
                                 <a class="dropdown-item" href="@Url.Action("UpdateEmployeeDetails","Admin")">Update details</a>
                             </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Report","Admin")">Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Upload","Admin")">Upload</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" href="@Url.Action("Logout","Employee")">Logout <i title="Logout" class="fas fa-sign-out-alt fa-lg"></i></a>
@@ -89,7 +97,7 @@
 
                 <strong>Employee ID: </strong>&nbsp @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control ", placeholder = "Eg: 1872310", type = "search" } })
 
-                
+
 
 
                 &nbsp<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search" />
@@ -117,6 +125,7 @@
 
         if (ViewBag.IsEmployeePresent == true)
         {
+            string s = Model.EmpId.ToString();
             <div class="container">
 
                 <!--
@@ -216,96 +225,126 @@
 
 
 
-                
-                
-                    <table class="table table-bordered table-hover">
-                        <tr style="background: #6fcf99;">
-                            <th>
-                                Employee
-                            </th>
-                            <th>
-                                Details
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>@Html.DisplayNameFor(model => model.EmpId)</strong>
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(model => model.EmpId)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <strong> @Html.DisplayNameFor(model => model.FirstName)</strong>
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(model => model.FirstName)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <strong> @Html.DisplayNameFor(model => model.LastName)</strong>
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(model => model.LastName)
-                            </td>
-                        </tr>
 
 
-                        <tr>
-                            <td>
-                                <strong> @Html.DisplayNameFor(model => model.Email)</strong>
-                            </td>
+                <table class="table table-bordered table-hover" id="TableData">
+                    <tr style="background: #6fcf99;">
+                        <th>
+                            Employee
+                        </th>
+                        <th>
+                            Details
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.EmpId)</strong>
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(model => model.Email)
-                            </td>
-                        </tr>
+                        <td>
+                            @Html.DisplayFor(model => model.EmpId)
+                        </td>
+                    </tr>
 
+                    <tr>
+                        <td>
+                            <strong> @Html.DisplayNameFor(model => model.FirstName)</strong>
+                        </td>
 
-                        <tr>
-                            <td>
-                                <strong>@Html.DisplayNameFor(model => model.ProjectId)</strong>
-                            </td>
+                        <td>
+                            @Html.DisplayFor(model => model.FirstName)
+                        </td>
+                    </tr>
 
-                            <td>
-                                @Html.DisplayFor(model => model.ProjectId)
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <strong> @Html.DisplayNameFor(model => model.LastName)</strong>
+                        </td>
 
-                        <tr>
-                            <td>
-                                <strong>@Html.DisplayNameFor(model => model.WONNumber)</strong>
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(model => model.WONNumber)
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td>
-                                <strong>@Html.DisplayNameFor(model => model.ProjectDetails)</strong>
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(model => model.ProjectDetails)
-                            </td>
-                        </tr>
+                        <td>
+                            @Html.DisplayFor(model => model.LastName)
+                        </td>
+                    </tr>
 
 
-                    </table>
-                
+                    <tr>
+                        <td>
+                            <strong> @Html.DisplayNameFor(model => model.Email)</strong>
+                        </td>
 
-                
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.ProjectId)</strong>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.ProjectId)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.WONNumber)</strong>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.WONNumber)
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.ProjectDetails)</strong>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.ProjectDetails)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.AssetId)</strong>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.AssetId)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.TokenId)</strong>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.TokenId)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>@Html.DisplayNameFor(model => model.Location)</strong>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Location)
+                        </td>
+                    </tr>
+                </table>
+
+
+
             </div>
+            <center>
+                <button id="PDF" class="btn btn-outline-success my-2 my-sm-0" onclick="downloadPdf()">Download PDF</button>
+                <button id="XLS" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("Export","Admin")'">Download Excel</button>
+            </center>
 
         }
         else
@@ -322,13 +361,50 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="~/Scripts/main.js"></script>
 
+    <script type="text/javascript">
+        function downloadPdf() {
+            html2canvas($("#TableData")[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download( @ViewBag.EmployeeNumber + ".pdf");
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        function exportToExcel(tableID, filename = '') {
+            var downloadurl;
+            var dataFileType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+            filename = filename ? filename + '.xls' : 'export_excel_data.xls';
+            downloadurl = document.createElement("a");
+            document.body.appendChild(downloadurl);
+            if (navigator.msSaveOrOpenBlob) {
+                  var blob = new Blob(['\ufeff', tableHTMLData], {
+                    type: dataFileType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+                downloadurl.download = filename;
+                downloadurl.click();
+            }
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js" integrity="sha512-gYUM+7JjtBqPPGOgwgOZ+NwjGl+11/EP124oB+ihjlBpLgP5LTh7R/Iwcdy//cgH+QzrjspBiJI5iUegTNww3w==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" integrity="sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA==" crossorigin="anonymous"></script>
     <footer class="pt-100">
-        
     </footer>
 </body>
 </html>
