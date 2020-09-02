@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace TCSProject.Controllers
     public class EmployeeController : Controller
     {
 
-
+        Employee emp = new Employee();
         SqlConnection con= new SqlConnection();
         SqlCommand com = new SqlCommand();
+        SqlDataAdapter da;
         SqlDataReader dr;
+        DataSet ds = new DataSet();
         // GET: Login
 
 
@@ -35,27 +38,25 @@ namespace TCSProject.Controllers
 
 
         [HttpPost]
-        public ActionResult VerifyEmployee(Employee emp)
+        public ActionResult Home(Employee emp)
         {
-            try
+            connectionstring();
+            con.Open();
+            da = new SqlDataAdapter("Select * from EmplTable where EmpId='" + emp.EmpId + "' and password='" + emp.Password + "'" , con);
+            da.Fill(ds);
+            List<Employee> emp1 = new List<Employee>();
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+
             {
 
+                emp1.Add(new Employee() { EmpId = int.Parse(dr[0].ToString()), FirstName = dr[1].ToString(), LastName = dr[2].ToString(), Email = dr[6].ToString(), ProjectId = int.Parse(dr[8].ToString()), WONNumber = int.Parse(dr[9].ToString()), ProjectDetails = dr[10].ToString() });
 
-                connectionstring();
-                con.Open();
-                com.Connection = con;
-                com.CommandText = "select * from EmplTable where EmpId='" + emp.EmpId + "' and Password='" + emp.Password + "'";
-                dr = com.ExecuteReader();
-               
-                
             }
-            catch (Exception ex)
-            {
-                Response.Write(ex.ToString());
-            }
+            
 
 
-            if (dr.Read() == false)
+            if (emp1.Count() ==0)
             {
          
                 emp.LoginErrorMessage = "Invalid Credentials !";
@@ -65,19 +66,31 @@ namespace TCSProject.Controllers
             {
                 con.Close();
                 Session["EmpId"] = emp.EmpId;
-                return RedirectToAction("Home","Employee");
+                ViewBag.PorjectId = emp1[0].ProjectId;
+                ViewBag.WONNumber = emp1[0].WONNumber;
+                Employee temp = new Employee();
+                temp = emp1[0];
+                ViewData.Model = temp;
+                
 
+                emp.EmpId = emp1[0].EmpId;
+                emp.FirstName = emp1[0].FirstName;
+                emp.LastName = emp1[0].LastName;
+                emp.Email = emp1[0].Email;
+
+                return View();
             }
         }
 
 
-    
 
+    
+        [HttpGet]
         public ActionResult Home()
         {
+            
             return View();
         }
-
         public ActionResult Logout()
         {
             Session.Abandon();
@@ -101,7 +114,7 @@ namespace TCSProject.Controllers
 
             var fromEmail = new MailAddress("fanofmyplayer@gmail.com", "Employee Management Portal");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "monuSurya"; // Replace with actual password
+            var fromEmailPassword = "#monuSurya05"; 
 
             string subject = "";
             string body = "";
@@ -247,6 +260,113 @@ namespace TCSProject.Controllers
             
             ViewBag.Message = message;
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult EditDetails()
+        {
+            connectionstring();
+            con.Open();
+            int EmpId = (int)Session["EmpId"];
+            da = new SqlDataAdapter("Select * from EmplTable where EmpId='" + EmpId + "'", con);
+            da.Fill(ds);
+            List<Employee> emp1 = new List<Employee>();
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+
+                emp1.Add(new Employee() { EmpId = int.Parse(dr[0].ToString()), FirstName = dr[1].ToString(), LastName = dr[2].ToString(), Email = dr[6].ToString(), ProjectId = int.Parse(dr[8].ToString()), WONNumber = int.Parse(dr[9].ToString()), ProjectDetails = dr[10].ToString(), AssetId = int.Parse(dr[12].ToString()), TokenId = int.Parse(dr[13].ToString()), Location = dr[15].ToString() });
+
+            }
+            
+
+            ViewData.Model = emp1[0];
+            return View();
+            
+        }
+
+        [HttpPost]
+        public ActionResult EditDetails(Employee emp)
+        {
+            connectionstring();
+            con.Open();
+            emp.EmpId = (int)Session["EmpId"];
+            string query = "UPDATE EmplTable SET ProjectId= @PId, WONNumber = @WON, ProjectDetails = @PDt, AssetId = @Ast, TokenId = @Tkn, Location = @Lcn WHERE EmpId= @EID";
+            SqlCommand cmd = new SqlCommand(query, con);
+           
+            cmd.Parameters.AddWithValue("@PId", emp.ProjectId);
+            cmd.Parameters.AddWithValue("@WON", emp.WONNumber);
+            cmd.Parameters.AddWithValue("@PDt", emp.ProjectDetails);
+            cmd.Parameters.AddWithValue("@Ast", emp.AssetId);
+            cmd.Parameters.AddWithValue("@Tkn", emp.TokenId);
+            cmd.Parameters.AddWithValue("@Lcn", emp.Location);
+            cmd.Parameters.AddWithValue("@EID", emp.EmpId);
+            int res = cmd.ExecuteNonQuery();
+            if (res != 0)
+            {
+
+                ViewBag.UpdateEmpStatus = true;
+                ViewBag.Message = "Successfully updated details: " + emp.EmpId;
+            }
+            else
+            {
+                ViewBag.UpdateEmpStatus = false;
+                ViewBag.Message = " Something went wrong. Please retry.";
+            }
+            return View();
+        }
+
+       
+        public ActionResult Export()
+        {
+
+            connectionstring();
+            con.Open();
+            int EmpId = (int)Session["EmpId"];
+            da = new SqlDataAdapter("Select * from EmplTable where EmpId='" + EmpId + "'", con);
+            da.Fill(ds);
+            List<Employee> emp1 = new List<Employee>();
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+
+                emp1.Add(new Employee() { EmpId = int.Parse(dr[0].ToString()), FirstName = dr[1].ToString(), LastName = dr[2].ToString(), Email = dr[6].ToString(), ProjectId = int.Parse(dr[8].ToString()), WONNumber = int.Parse(dr[9].ToString()), ProjectDetails = dr[10].ToString(), AssetId = int.Parse(dr[12].ToString()), TokenId = int.Parse(dr[13].ToString()), Location = dr[15].ToString() });
+
+            }
+
+
+            Microsoft.Office.Interop.Excel.Application excelfile = new Microsoft.Office.Interop.Excel.Application();
+            excelfile.Application.Workbooks.Add(Type.Missing);
+            excelfile.Cells[1, 1] = "Employee";
+            excelfile.Cells[1, 2] = "Details";
+
+
+            excelfile.Cells[2, 1] = "Employee ID";
+            excelfile.Cells[2, 2] = emp1[0].EmpId;
+            excelfile.Cells[3, 1] = "First Name";
+            excelfile.Cells[3, 2] = emp1[0].FirstName;
+            excelfile.Cells[4, 1] = "Last Name";
+            excelfile.Cells[4, 2] = emp1[0].LastName;
+            excelfile.Cells[5, 1] = "Email";
+            excelfile.Cells[5, 2] = emp1[0].Email;
+            excelfile.Cells[6, 1] = "Project ID";
+            excelfile.Cells[6, 2] = emp1[0].ProjectId;
+            excelfile.Cells[7, 1] = "WON Number";
+            excelfile.Cells[7, 2] = emp1[0].WONNumber;
+            excelfile.Cells[8, 1] = "Project Details";
+            excelfile.Cells[8, 2] = emp1[0].ProjectDetails;
+            excelfile.Cells[9, 1] = "Asset ID";
+            excelfile.Cells[9, 2] = emp1[0].AssetId;
+            excelfile.Cells[10,1] = "Token ID";
+            excelfile.Cells[10,2] = emp1[0].TokenId;
+            excelfile.Cells[11, 1] = "Location";
+            excelfile.Cells[11, 2] = emp1[0].Location;
+
+
+            excelfile.Columns.AutoFit();
+            excelfile.Visible = true;
+
+            return View();
         }
 
     }
