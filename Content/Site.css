@@ -162,3 +162,13 @@ textarea {
     border-color: #bbbbbb;
     padding: 10px;
 }
+
+
+.report-card-inner {
+    background-color: white;
+    position: relative;
+    width: 80%;
+    text-align: center;
+    transition: transform 0.8s;
+    border-radius: 8px;
+}
